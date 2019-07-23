@@ -1,27 +1,31 @@
 class Cell {
-    private state: boolean;
-    private position: { x: number, y: number };
+    private _state: boolean;
+    private _position: { x: number, y: number };
 
-    constructor() {
-        this.state = false;
-        this.position = { x: 0, y: 0 };
+    constructor(x: number, y: number) {
+        this._state = false;
+        this._position = { x, y };
+    }
+
+    get position() {
+        return this._position;
     }
 }
 
 class CellMap {
-    private cells: Cell[][];
+    private _cells: Cell[][];
 
-    constructor(private width: number, private height: number) {
-        this.cells = [];
+    constructor(private _width: number, private _height: number) {
+        this._cells = [];
     }
 
     cellAt(x: number, y: number) {
-        return this.cells[x][y];
+        return this._cells[x][y];
     }
 
     resize(width: number, height: number) {
-        this.width = width;
-        this.height = height;
+        this._width = width;
+        this._height = height;
     }
 
     cellSurroundings(x: number, y: number) {
@@ -47,7 +51,7 @@ class ConsoleMap extends CellMap {
 
         process.stdout.on('resize', () => {
             this.resize(process.stdout.columns || 80, process.stdout.rows || 24);
-        })
+        });
     }
 
 }
