@@ -1,6 +1,11 @@
+interface Point { 
+    x: number; 
+    y: number;
+}
+
 class Cell {
     private _state: boolean;
-    private _position: { x: number, y: number };
+    private _position: Point;
 
     constructor(x: number, y: number) {
         this._state = false;
@@ -66,6 +71,19 @@ class CellMap {
             this.cellAt(x - 1, y),     // Left
             this.cellAt(x + 1, y)      // Right
         ];
+    }
+
+    seed(initialSeed?: Point[]) {
+        if (!initialSeed)
+            for(let col = 0; col < this._width; col++)
+                for(let row = 0; row < this._height; row++)
+                    if (Math.round(Math.random()) === 1) 
+                        this._cells[col][row].live();
+                    else 
+                        this._cells[col][row].die();
+        else
+            for(const point of initialSeed)
+                this._cells[point.x][point.y].live();
     }
 
     cycle() {
