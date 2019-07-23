@@ -19,7 +19,19 @@ class CellMap {
         this._cells = [];
     }
 
-    cellAt(x: number, y: number) {
+    cellAt(x: number, y: number): Cell {
+        if (x === -1) {
+            x = this._width; // If x went past the left wall, go to the right wall
+        }
+        if (x === this._width + 1) {
+            x = 0; // If x went past the right wall, go to the left wall
+        }
+        if (y === -1) {
+            y = this._height; // If y went past the top wall, go to the bottom wall
+        }
+        if (y === this._height + 1) {
+            y = 0; // If y went past the bottom wall, go to the top wall
+        }
         return this._cells[x][y];
     }
 
@@ -28,7 +40,7 @@ class CellMap {
         this._height = height;
     }
 
-    cellSurroundings(x: number, y: number) {
+    cellSurroundings(x: number, y: number): Cell[] {
         return [
             this.cellAt(x, y + 1),     // Up
             this.cellAt(x, y - 1),     // Down
@@ -48,7 +60,7 @@ class ConsoleMap extends CellMap {
             process.stdout.columns || 80,
             process.stdout.rows || 24
         );
-
+        
         process.stdout.on('resize', () => {
             this.resize(process.stdout.columns || 80, process.stdout.rows || 24);
         });
