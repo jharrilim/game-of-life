@@ -1,0 +1,22 @@
+{
+  "name": "game-of-life",
+  "version": "0.1.0",
+  "description": "Game of life in CLI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "of",
+    "life",
+    "node",
+    "cli",
+    "terminal"
+  ],
+  "author": "Joseph Harrison-Lim",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.6.8"
+  }
+}
