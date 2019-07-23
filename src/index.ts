@@ -1,5 +1,5 @@
-interface Point { 
-    x: number; 
+interface Point {
+    x: number;
     y: number;
 }
 
@@ -34,7 +34,6 @@ class CellMap {
     private _cycles: number = 0;
 
     constructor(private _width: number, private _height: number) {
-        
         for (let col = 0; col < this._width; col++)
             for (let row = 0; row < this._height; row++)
                 this._cells[col][row] = new Cell(col, row);
@@ -57,6 +56,36 @@ class CellMap {
     }
 
     resize(width: number, height: number) {
+        const widthDiff = width - this._width;
+        const heightDiff = height - this._height;
+        if (widthDiff > 0) { // Add new columns if width has been expanded
+            // This fills out the box on the right
+            for (let col = this._width; col < width; col++)
+                for (let row = 0; row < this._height; row++)
+                    this._cells[col][row] = new Cell(col, row);
+        }
+        if (heightDiff > 0) { // Add new rows if height has been expanded
+            // This fills out the box on the bottom
+            for (let col = 0; col < this._width; col++)
+                for (let row = this._height; row < height; row++)
+                    this._cells[col][row] = new Cell(col, row);
+        }
+        if (widthDiff > 0 && heightDiff > 0) { // Add the box in the bottom right corner if both sizes changed
+            for (let col = this._width; col < width; col++)
+                for (let row = this._height; row < height; row++)
+                    this._cells[col][row] = new Cell(col, row);
+        }
+
+        if (widthDiff < 0) { // If width shrunk, remove columns
+            this._cells.splice(-1, Math.abs(widthDiff));
+        }
+
+        if (heightDiff < 0) {
+            for(let col = 0; col < this._width; col++) {
+                this._cells[col].splice(-1, Math.abs(heightDiff));
+            }
+        }
+        
         this._width = width;
         this._height = height;
     }
@@ -76,14 +105,14 @@ class CellMap {
 
     seed(initialSeed?: Point[]) {
         if (!initialSeed)
-            for(let col = 0; col < this._width; col++)
-                for(let row = 0; row < this._height; row++)
-                    if (Math.round(Math.random()) === 1) 
+            for (let col = 0; col < this._width; col++)
+                for (let row = 0; row < this._height; row++)
+                    if (Math.round(Math.random()) === 1)
                         this._cells[col][row].live();
-                    else 
+                    else
                         this._cells[col][row].die();
         else
-            for(const point of initialSeed)
+            for (const point of initialSeed)
                 this._cells[point.x][point.y].live();
     }
 
