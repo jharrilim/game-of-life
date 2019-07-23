@@ -17,6 +17,9 @@ class CellMap {
 
     constructor(private _width: number, private _height: number) {
         this._cells = [];
+        for (let col = 0; col < this._width; col++)
+            for (let row = 0; row < this._height; row++)
+                this._cells[col][row] = new Cell(col, row);
     }
 
     cellAt(x: number, y: number): Cell {
@@ -60,7 +63,7 @@ class ConsoleMap extends CellMap {
             process.stdout.columns || 80,
             process.stdout.rows || 24
         );
-        
+
         process.stdout.on('resize', () => {
             this.resize(process.stdout.columns || 80, process.stdout.rows || 24);
         });
