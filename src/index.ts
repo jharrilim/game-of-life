@@ -34,6 +34,7 @@ class CellMap {
     private _cycles: number = 0;
 
     constructor(private _width: number, private _height: number) {
+        
         for (let col = 0; col < this._width; col++)
             for (let row = 0; row < this._height; row++)
                 this._cells[col][row] = new Cell(col, row);
@@ -87,7 +88,10 @@ class CellMap {
     }
 
     cycle() {
-        
+        const newState = this._cells.map(col => [...col]);
+        newState.forEach(col => col.forEach(cell => this._applyCellRules));
+        this._cells = newState;
+        this._cycles++;
     }
 
     _applyCellRules(cell: Cell) {
