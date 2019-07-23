@@ -10,13 +10,25 @@ class Cell {
     get position() {
         return this._position;
     }
+
+    get isAlive() {
+        return this._state;
+    }
+
+    die() {
+        this._state = false;
+    }
+
+    live() {
+        this._state = true;
+    }
 }
 
 class CellMap {
-    private _cells: Cell[][];
+    private _cells: Cell[][] = [];
+    private _cycles: number = 0;
 
     constructor(private _width: number, private _height: number) {
-        this._cells = [];
         for (let col = 0; col < this._width; col++)
             for (let row = 0; row < this._height; row++)
                 this._cells[col][row] = new Cell(col, row);
@@ -54,6 +66,25 @@ class CellMap {
             this.cellAt(x - 1, y),     // Left
             this.cellAt(x + 1, y)      // Right
         ];
+    }
+
+    cycle() {
+        
+    }
+
+    _applyCellRules(cell: Cell) {
+        const { x, y } = cell.position;
+        const cells = this.cellSurroundings(x, y);
+        const aliveSurroundings = cells.reduce((prev, curr) => prev + (curr.isAlive ? 1 : 0), 0);
+        if (aliveSurroundings < 2)
+            cell.die(); // Underpopulated
+        else if (cell.isAlive && aliveSurroundings === 2)
+            cell.live(); // Unchanged
+        else if (aliveSurroundings === 3)
+            cell.live(); // Rebirth if dead
+        else if (aliveSurroundings > 3)
+            cell.die(); // Overpopulated
+        else throw new Error(`Unexpected error in _applyCellRules.\naliveSurroundings:\n\t${aliveSurroundings}\ncell:\n${JSON.stringify(cell, null, 2)}`);
     }
 }
 
