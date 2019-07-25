@@ -1,17 +1,28 @@
 import { CellMap } from "./CellMap";
+import { EOL } from 'os';
+import { cursorTo, clearScreenDown } from 'readline';
 
 export class ConsoleMap extends CellMap {
-    private _listeners: CallableFunction[];
-    constructor() {
-        super(
-            process.stdout.columns || 80,
-            process.stdout.rows || 24
-        );
-
-        this._listeners = [];
+    constructor(
+        private width = process.stdout.columns || 80,
+        private height = process.stdout.rows || 24
+    ) {
+        super(width, height);
         process.stdout.on('resize', () => {
             this.resize(process.stdout.columns || 80, process.stdout.rows || 24);
         });
     }
 
+    render() {
+        cursorTo(process.stdout, 0, 0);
+        clearScreenDown(process.stdout);
+        let map = '';
+        for(let i = 0; i < this.cells[0].length /* this should be safe since it is rectangular */; i++) {
+            for (let j = 0; j < this.cells.length; j++) {
+                map += this.cells[j][i].isAlive ? '■' : ' ';
+            }
+            map += EOL;
+        }
+        process.stdout.write(map);
+    }
 }

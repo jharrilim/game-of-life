@@ -2,12 +2,13 @@ import { ConsoleMap } from './ConsoleMap';
 
 
 const app = new ConsoleMap();
+app.seed();
 app.on('cycle', function(cycleCount) {
-    console.log(`cycle: ${cycleCount}`);
+    app.render();
 });
 
 setInterval((function(app) {
     return function() {
         app.cycle();
     }
-})(app), 1000);
+})(app), 200);

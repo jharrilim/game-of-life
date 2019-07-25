@@ -6,6 +6,10 @@ export abstract class CellMap extends EventEmitter {
     private _cells: Cell[][];
     private _cycles: number;
 
+    get cells() {
+        return this._cells;
+    }
+
     constructor(private _width: number, private _height: number) {
         super();
         this._cells = [];
@@ -113,13 +117,13 @@ export abstract class CellMap extends EventEmitter {
         const cells = this.cellSurroundings(x,y);
         const aliveSurroundings = cells.reduce((prev, curr) => prev + (curr.isAlive ? 1 : 0), 0);
         if (aliveSurroundings < 2)
-            cell.die(); // Underpopulated
-        else if (cell.isAlive && aliveSurroundings === 2)
-            cell.live(); // Unchanged
+            cell.die();  // Underpopulated
+        else if (aliveSurroundings === 2)
+            return;      // Unchanged
         else if (aliveSurroundings === 3)
             cell.live(); // Rebirth if dead
         else if (aliveSurroundings > 3)
-            cell.die(); // Overpopulated
+            cell.die();  // Overpopulated
         else throw new Error(`Unexpected error in _applyCellRules.\naliveSurroundings:\n\t${aliveSurroundings}\ncell:\n${JSON.stringify(cell, null, 2)}`);
     }
 }
