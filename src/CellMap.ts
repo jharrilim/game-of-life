@@ -20,15 +20,15 @@ export abstract class CellMap extends EventEmitter {
 
     cellAt(x: number, y: number): Cell {
         if (x === -1) {
-            x = this._width; // If x went past the left wall, go to the right wall
+            x = this._width -1; // If x went past the left wall, go to the right wall
         }
-        if (x === this._width + 1) {
+        if (x === this._width) {
             x = 0; // If x went past the right wall, go to the left wall
         }
         if (y === -1) {
-            y = this._height; // If y went past the top wall, go to the bottom wall
+            y = this._height -1; // If y went past the top wall, go to the bottom wall
         }
-        if (y === this._height + 1) {
+        if (y === this._height) {
             y = 0; // If y went past the bottom wall, go to the top wall
         }
         return this._cells[x][y];
@@ -39,9 +39,11 @@ export abstract class CellMap extends EventEmitter {
         const heightDiff = height - this._height;
         if (widthDiff > 0) { // Add new columns if width has been expanded
             // This fills out the box on the right
-            for (let col = this._width; col < width; col++)
+            for (let col = this._width; col < width; col++) {
+                this._cells[col] = [];
                 for (let row = 0; row < this._height; row++)
                     this._cells[col][row] = new Cell(col, row);
+            }
         }
         if (heightDiff > 0) { // Add new rows if height has been expanded
             // This fills out the box on the bottom
@@ -50,9 +52,11 @@ export abstract class CellMap extends EventEmitter {
                     this._cells[col][row] = new Cell(col, row);
         }
         if (widthDiff > 0 && heightDiff > 0) { // Add the box in the bottom right corner if both sizes changed
-            for (let col = this._width; col < width; col++)
+            for (let col = this._width; col < width; col++) {
+                this._cells[col] = [];
                 for (let row = this._height; row < height; row++)
                     this._cells[col][row] = new Cell(col, row);
+            }
         }
 
         if (widthDiff < 0) { // If width shrunk, remove columns
