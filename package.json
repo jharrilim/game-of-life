@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Game of life in CLI",
   "main": "dist/index.js",
+  "bin": "./bin/game-of-life",
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist",

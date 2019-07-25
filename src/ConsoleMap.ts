@@ -19,10 +19,12 @@ export class ConsoleMap extends CellMap {
         let map = '';
         for(let i = 0; i < this.cells[0].length /* this should be safe since it is rectangular */; i++) {
             for (let j = 0; j < this.cells.length; j++) {
-                map += this.cells[j][i].isAlive ? '■' : ' ';
+                const line = this.cells[j][i].isAlive ? '■' : ' ';
+                map += line;
             }
             map += EOL;
         }
         process.stdout.write(map);
+        cursorTo(process.stdout, 0, 0);
     }
 }

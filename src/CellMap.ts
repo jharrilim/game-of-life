@@ -24,13 +24,13 @@ export abstract class CellMap extends EventEmitter {
 
     cellAt(x: number, y: number): Cell {
         if (x === -1) {
-            x = this._width -1; // If x went past the left wall, go to the right wall
+            x = this._width - 1; // If x went past the left wall, go to the right wall
         }
         if (x === this._width) {
             x = 0; // If x went past the right wall, go to the left wall
         }
         if (y === -1) {
-            y = this._height -1; // If y went past the top wall, go to the bottom wall
+            y = this._height - 1; // If y went past the top wall, go to the bottom wall
         }
         if (y === this._height) {
             y = 0; // If y went past the bottom wall, go to the top wall
@@ -90,17 +90,31 @@ export abstract class CellMap extends EventEmitter {
         ];
     }
 
-    seed(initialSeed?: Point[]) {
-        if (!initialSeed)
+    seed(initialSeed?: Point[] | number) {
+        if (!initialSeed) {
             for (let col = 0; col < this._width; col++)
                 for (let row = 0; row < this._height; row++)
                     if (Math.round(Math.random()) === 1)
                         this._cells[col][row].live();
                     else
                         this._cells[col][row].die();
-        else
-            for (const point of initialSeed)
-                this._cells[point.x][point.y].live();
+        }
+        else {
+            if (initialSeed instanceof Array)
+                for (const point of initialSeed)
+                    this._cells[point.x][point.y].live();
+            else
+                for (let col = 0; col < this._width; col++)
+                    for (let row = 0; row < this._height; row++)
+                        if (initialSeed > 0 && Math.round(Math.random()) === 1) {
+                            this._cells[col][row].live();
+                            initialSeed--;
+                        }
+                        else {
+                            this._cells[col][row].die();
+                        }
+
+        }
     }
 
     cycle() {
@@ -114,7 +128,7 @@ export abstract class CellMap extends EventEmitter {
 
     private _applyCellRules(cell: Cell) {
         const { x, y } = cell.position;
-        const cells = this.cellSurroundings(x,y);
+        const cells = this.cellSurroundings(x, y);
         const aliveSurroundings = cells.reduce((prev, curr) => prev + (curr.isAlive ? 1 : 0), 0);
         if (aliveSurroundings < 2)
             cell.die();  // Underpopulated
