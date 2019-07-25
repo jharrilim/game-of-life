@@ -2,8 +2,10 @@
   "name": "game-of-life",
   "version": "0.1.0",
   "description": "Game of life in CLI",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -17,6 +19,9 @@
   "author": "Joseph Harrison-Lim",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^12.6.8"
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.8",
+    "jest": "^24.8.0",
+    "typescript": "^3.5.3"
   }
 }
