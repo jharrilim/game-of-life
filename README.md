@@ -22,11 +22,10 @@ or
 ```js
 const { ConsoleMap } = require('@jharrilim/game-of-life');
 
-const app = new ConsoleMap()
-    .seed(30)
-    .on('cycle', cycleCount => {
-        app.render();
-    });
+const app = new ConsoleMap().seed(30);
+app.on('cycle', cycleCount => {
+    app.render();
+});
 
 setInterval(() => {
     app.cycle();
