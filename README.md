@@ -20,7 +20,7 @@ game-of-life
 or
 
 ```js
-const { ConsoleMap } = require('@jharrilim/game-of-life/ConsoleMap');
+const { ConsoleMap } = require('@jharrilim/game-of-life');
 
 const app = new ConsoleMap()
     .seed(30)
