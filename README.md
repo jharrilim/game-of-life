@@ -1,5 +1,8 @@
 # game-of-life
 
+[![NPM Version]](https://www.npmjs.com/package/@jharrilim/game-of-life)
+[![NPM Downloads]](https://www.npmjs.com/package/@jharrilim/game-of-life)
+
 Conway's Game of Life in a terminal.
 
 ## Usage
@@ -31,3 +34,6 @@ setInterval(() => {
     app.cycle();
 }, 1000 / 33);
 ```
+
+[NPM Version]: https://img.shields.io/npm/v/@jharrilim/game-of-life?style=flat-square
+[NPM Downloads]: https://img.shields.io/npm/dy/@jharrilim/game-of-life?style=flat-square

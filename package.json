@@ -2,6 +2,11 @@
   "name": "@jharrilim/game-of-life",
   "version": "0.3.0",
   "description": "Game of life in CLI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jharrilim/game-of-life.git"
+  },
+  "readme": "https://github.com/jharrilim/game-of-life/blob/master/README.md",
   "main": "dist/index.js",
   "bin": "./bin/game-of-life",
   "scripts": {
