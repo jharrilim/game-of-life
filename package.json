@@ -1,5 +1,5 @@
 {
-  "name": "game-of-life",
+  "name": "@jharrilim/game-of-life",
   "version": "0.1.0",
   "description": "Game of life in CLI",
   "main": "dist/index.js",

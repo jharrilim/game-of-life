@@ -115,6 +115,7 @@ export abstract class CellMap extends EventEmitter {
                         }
 
         }
+        return this;
     }
 
     cycle() {
@@ -123,6 +124,7 @@ export abstract class CellMap extends EventEmitter {
         this._cells = newState;
         this._cycles++;
         this.emit('cycle', this._cycles);
+        return this;
     }
 
 
