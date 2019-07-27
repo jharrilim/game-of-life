@@ -1,6 +1,6 @@
 {
   "name": "@jharrilim/game-of-life",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Game of life in CLI",
   "main": "dist/index.js",
   "bin": "./bin/game-of-life",
