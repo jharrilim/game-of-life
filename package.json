@@ -24,5 +24,13 @@
     "@types/node": "^12.6.8",
     "jest": "^24.8.0",
     "typescript": "^3.5.3"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
